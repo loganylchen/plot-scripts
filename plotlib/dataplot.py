@@ -23,7 +23,7 @@ def density(data,column,title='density',out='density.pdf'):
     :return:
     '''
 
-
+    data[column] = data[column].astype(float)
     ax = sns.distplot(data[column])
     ax.set_title(title)
     fig = ax.get_figure()
