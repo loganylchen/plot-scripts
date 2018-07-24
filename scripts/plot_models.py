@@ -20,7 +20,7 @@ def main():
     density_parser.add_argument('--data', dest='data', required=True, action='store',
                                        help='data with title, .csv .txt .gz,<required>')
     density_parser.add_argument('--column', dest='column', required=True,  action='store',
-                                       help='column name wants to plot,<required>')
+                                       help='column name wants to plot or col number,<required>')
     density_parser.add_argument('--sep', dest='sep', default= '\t',action='store',
                                        help='sep ,defalut "tab"')
     density_parser.add_argument('--title', dest='title', default='density', action='store',
