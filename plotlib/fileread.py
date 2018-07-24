@@ -50,7 +50,10 @@ def read(file,header,sep='\t'):
     :param sep:
     :return:
     '''
-    pd_data = pd.read_csv(file,sep=sep,header=header)
+    if header:
+        pd_data = pd.read_csv(file,sep=sep,header=1)
+    else:
+        pd_data = pd.read_csv(file, sep=sep, header=0)
     return pd_data
 
 if __name__ == '__main__':
