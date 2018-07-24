@@ -72,11 +72,12 @@ def main():
     # calgc_parser.set_defaults(func=cal_bed_gc)
 
     args = parser.parse_args()
-    try:
-        args.func(args)
-    except Exception as e:
-        print(e.args)
-        parser.print_help()
+    args.func(args)
+    # try:
+    #     args.func(args)
+    # except Exception as e:
+    #     print(e.args)
+    #     parser.print_help()
 
 
 if __name__ == '__main__':

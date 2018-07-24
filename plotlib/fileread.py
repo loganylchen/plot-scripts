@@ -18,7 +18,7 @@ def main():
     pass
 
 
-def read_gz(file, header,sep='\t'):
+def read_gz(file, header, sep='\t'):
     '''
 
     :param file:
@@ -27,22 +27,25 @@ def read_gz(file, header,sep='\t'):
     :return:
     '''
     data = []
+
     with gzip.open(file, 'rb') as f:
         if header:
-            title = f.readline()
+            title = str(f.readline(), encoding='utf8')
             columns = title.strip('\n').split(sep)
-            line = f.readline()
+            line = str(f.readline(), encoding='utf8')
         else:
-            line=f.readlines()
-            columns = list(range(1,len(line.split('\t'))+1))
+            line = str(f.readline(), encoding='utf8')
+            columns = list(map(lambda x:'{}'.format(x+1),range(len(line.split(sep)))))
+        # print(columns)
         while line:
             cells = line.strip('\n').split(sep)
             data.append(cells)
+            line = str(f.readline(), encoding='utf8')
     pd_data = pd.DataFrame(data, columns=columns)
     return pd_data
 
 
-def read(file,header,sep='\t'):
+def read(file, header, sep='\t'):
     '''
 
     :param file:
@@ -51,10 +54,11 @@ def read(file,header,sep='\t'):
     :return:
     '''
     if header:
-        pd_data = pd.read_csv(file,sep=sep,header=1)
+        pd_data = pd.read_csv(file, sep=sep, header=1)
     else:
         pd_data = pd.read_csv(file, sep=sep, header=0)
     return pd_data
+
 
 if __name__ == '__main__':
     main()

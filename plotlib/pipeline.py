@@ -22,7 +22,8 @@ def density_pipeline(args):
     :param args:
     :return:
     '''
-    if os.path.splitext(args.data) == 'gz':
+
+    if os.path.splitext(args.data)[1] == '.gz':
         data = read_gz(args.data,args.header,sep=args.sep)
     else:
         data = read(args.data,args.header,sep=args.sep)
