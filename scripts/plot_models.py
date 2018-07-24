@@ -9,6 +9,8 @@
 from __future__ import absolute_import, unicode_literals
 import os, sys
 import argparse
+import matplotlib
+matplotlib.use('Agg')
 sys.path.append(os.path.abspath(os.path.dirname(os.path.dirname(__file__))))
 from plotlib.pipeline import density_pipeline
 
