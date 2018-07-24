@@ -26,7 +26,7 @@ def density_pipeline(args):
         data = read_gz(args.data,sep=args.sep)
     else:
         data = read(args.data,sep=args.sep)
-    density(data,args.column,args.title,args.out)
+    density(data,args.column,args.title,args.output)
 
 if __name__ == '__main__':
     main()
