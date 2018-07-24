@@ -18,7 +18,7 @@ def main():
 
     density_parser = parser_sub.add_parser('density', help='画一列数据的density')
     density_parser.add_argument('--data', dest='data', required=True, action='store',
-                                       help='data with title, .csv .txt .gz,<required>')
+                                       help='data, .csv .txt .gz,<required>')
     density_parser.add_argument('--column', dest='column', required=True,  action='store',
                                        help='column name wants to plot or col number,<required>')
     density_parser.add_argument('--sep', dest='sep', default= '\t',action='store',
@@ -27,6 +27,8 @@ def main():
                                help='title ,defalut "density"')
     density_parser.add_argument('--output', dest='output', required=True, action='store',
                                        help='the suffix is .png or .pdf,<required>')
+    density_parser.add_argument('--header', dest='header',  action='store_true',
+                                help='是否包含头，默认不包含，如果包含则column需要为列名')
     density_parser.set_defaults(func=density_pipeline)
 
     # bam_template_gc_parser = parser_sub.add_parser('Bam_GC', help='统计DNA模版GC含量')

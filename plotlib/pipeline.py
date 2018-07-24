@@ -23,9 +23,9 @@ def density_pipeline(args):
     :return:
     '''
     if os.path.splitext(args.data) == 'gz':
-        data = read_gz(args.data,sep=args.sep)
+        data = read_gz(args.data,args.header,sep=args.sep)
     else:
-        data = read(args.data,sep=args.sep)
+        data = read(args.data,args.header,sep=args.sep)
     density(data,args.column,args.title,args.output)
 
 if __name__ == '__main__':

@@ -18,18 +18,23 @@ def main():
     pass
 
 
-def read_gz(file, sep='\t'):
+def read_gz(file, header,sep='\t'):
     '''
 
     :param file:
+    :param header:
     :param sep:
     :return:
     '''
     data = []
     with gzip.open(file, 'rb') as f:
-        title = f.readline()
-        columns = title.strip('\n').split(sep)
-        line = f.readline()
+        if header:
+            title = f.readline()
+            columns = title.strip('\n').split(sep)
+            line = f.readline()
+        else:
+            line=f.readlines()
+            columns = list(range(1,len(line.split('\t'))+1))
         while line:
             cells = line.strip('\n').split(sep)
             data.append(cells)
@@ -37,14 +42,15 @@ def read_gz(file, sep='\t'):
     return pd_data
 
 
-def read(file,sep='\t'):
+def read(file,header,sep='\t'):
     '''
 
     :param file:
+    :param header:
     :param sep:
     :return:
     '''
-    pd_data = pd.read_csv(file,sep=sep)
+    pd_data = pd.read_csv(file,sep=sep,header=header)
     return pd_data
 
 if __name__ == '__main__':

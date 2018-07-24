@@ -22,12 +22,9 @@ def density(data,column,title='density',out='density.pdf'):
     :param out:
     :return:
     '''
-    try:
-        column=int(column)
-        ax = sns.distplot(data.iloc[:,column])
-    except:
-        ax = sns.distplot(data[column])
 
+
+    ax = sns.distplot(data[column])
     ax.set_title(title)
     fig = ax.get_figure()
     fig.savefig(out)
