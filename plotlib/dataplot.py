@@ -51,10 +51,13 @@ def cdf(data, type_column, value_column, title='CDF', out='cdf.pdf'):
         if tp == uniq[0]:
             x = np.linspace(min(data[data[type_column] == tp][value_column]),
                             max(data[data[type_column] == tp][value_column]))
-            pd_data = pd.DataFrame(x,columns=[value_column])
-        pd_data[tp] = ecdf(x)
-        ax = sns.lineplot(x=value_column,y=tp,data=pd_data,label=tp)
+            pd_data = pd.DataFrame(ecdf(x),x,columns=[tp])
+            # pd_data[tp] = ecdf(x)
+        else:
+            pd_data[tp] = ecdf(x)
+    ax = sns.lineplot(palette="tab10", linewidth=2.5,data=pd_data)
     ax.set_title(title)
+    ax.legend()
     fig = ax.get_figure()
     fig.savefig(out)
 

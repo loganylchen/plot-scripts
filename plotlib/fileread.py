@@ -28,19 +28,24 @@ def read_gz(file, header, sep='\t'):
     '''
     data = []
 
-    with gzip.open(file, 'rb') as f:
+    with gzip.open(file, 'rt',newline='\n') as f:
         if header:
-            title = str(f.readline(), encoding='utf8')
+            # title = str(f.readline(), encoding='utf8')
+            title = f.readline()
             columns = title.strip('\n').split(sep)
-            line = str(f.readline(), encoding='utf8')
+            # line = str(f.readline(), encoding='utf8')
+            line=f.readline()
+            # print(columns)
         else:
-            line = str(f.readline(), encoding='utf8')
+            # line = str(f.readline(), encoding='utf8')
+            line = f.readline()
             columns = list(map(lambda x:'{}'.format(x+1),range(len(line.split(sep)))))
         # print(columns)
         while line:
             cells = line.strip('\n').split(sep)
             data.append(cells)
-            line = str(f.readline(), encoding='utf8')
+            # line = str(f.readline(), encoding='utf8')
+            line = f.readline()
     pd_data = pd.DataFrame(data, columns=columns)
     return pd_data
 

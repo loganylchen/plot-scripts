@@ -12,7 +12,7 @@ import argparse
 import matplotlib
 matplotlib.use('Agg')
 sys.path.append(os.path.abspath(os.path.dirname(os.path.dirname(__file__))))
-from plotlib.pipeline import density_pipeline
+from plotlib.pipeline import density_pipeline,cdf_pipeline
 
 def main():
     parser = argparse.ArgumentParser(description='Some plots for some different Format file')
@@ -32,6 +32,23 @@ def main():
     density_parser.add_argument('--header', dest='header',  action='store_true',
                                 help='是否包含头，默认不包含，如果包含则column需要为列名')
     density_parser.set_defaults(func=density_pipeline)
+
+    cdf_parser = parser_sub.add_parser('cdf', help='画一列数据的cdf')
+    cdf_parser.add_argument('--data', dest='data', required=True, action='store',
+                                help='data, .csv .txt .gz,<required>')
+    cdf_parser.add_argument('--type-column', dest='type_column', required=True, action='store',
+                                help='type column name or col number,<required>')
+    cdf_parser.add_argument('--value-column', dest='value_column', required=True, action='store',
+                            help='value column name or col number,<required>')
+    cdf_parser.add_argument('--sep', dest='sep', default='\t', action='store',
+                                help='sep ,defalut "tab"')
+    cdf_parser.add_argument('--title', dest='title', default='cdf', action='store',
+                                help='title ,defalut "cdf"')
+    cdf_parser.add_argument('--output', dest='output', required=True, action='store',
+                                help='the suffix is .png or .pdf,<required>')
+    cdf_parser.add_argument('--header', dest='header', action='store_true',
+                                help='是否包含头，默认不包含，如果包含则column需要为列名')
+    cdf_parser.set_defaults(func=cdf_pipeline)
 
     # bam_template_gc_parser = parser_sub.add_parser('Bam_GC', help='统计DNA模版GC含量')
     # '''align,fasta,outdir,sample_n=10000'''
