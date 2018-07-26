@@ -36,8 +36,8 @@ def main():
     cdf_parser = parser_sub.add_parser('cdf', help='画一列数据的cdf')
     cdf_parser.add_argument('--data', dest='data', required=True, action='store',
                                 help='data, .csv .txt .gz,<required>')
-    cdf_parser.add_argument('--type-column', dest='type_column', required=True, action='store',
-                                help='type column name or col number,<required>')
+    cdf_parser.add_argument('--type-column', dest='type_column', required=False, action='store',
+                                help='type column name or col number',default='')
     cdf_parser.add_argument('--value-column', dest='value_column', required=True, action='store',
                             help='value column name or col number,<required>')
     cdf_parser.add_argument('--sep', dest='sep', default='\t', action='store',
