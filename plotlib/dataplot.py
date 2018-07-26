@@ -50,7 +50,7 @@ def cdf(data, type_column, value_column, title='CDF', out='cdf.pdf'):
             ecdf = sa.distributions.ECDF(data[data[type_column] == tp][value_column])
             if tp == uniq[0]:
                 x = np.linspace(min(data[data[type_column] == tp][value_column]),
-                                max(data[data[type_column] == tp][value_column]))
+                                data[data[type_column] == tp][value_column].median()*1.5)
                 pd_data = pd.DataFrame(ecdf(x),x,columns=[tp])
                 # pd_data[tp] = ecdf(x)
             else:
@@ -58,7 +58,7 @@ def cdf(data, type_column, value_column, title='CDF', out='cdf.pdf'):
     else:
         ecdf = sa.distributions.ECDF(data[value_column])
         x = np.linspace(min(data[value_column]),
-                        max(data[value_column]))
+                        data[value_column].median()*1.5)
         pd_data = pd.DataFrame(ecdf(x), x, columns=['depth'])
     ax = sns.lineplot(palette="tab10", linewidth=2.5,data=pd_data)
     ax.set_title(title)
