@@ -43,7 +43,7 @@ def pairplot(data,type_column,title='pairplot',out='pairplot.pdf'):
     :return:
     '''
     ax = sns.pairplot(data,hue=type_column)
-    ax.set_title(title)
+    # ax.set_title(title)
     fig = ax.get_figure()
     fig.savefig(out)
 
