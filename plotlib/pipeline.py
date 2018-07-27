@@ -29,6 +29,20 @@ def density_pipeline(args):
         data = read(args.data,args.header,sep=args.sep)
     density(data,args.column,args.title,args.output)
 
+def pairplot_pipeline(args):
+    '''
+
+    :param args:
+    :return:
+    '''
+    if os.path.splitext(args.data)[1] == '.gz':
+        data = read_gz(args.data,args.header,sep=args.sep)
+    else:
+        data = read(args.data,args.header,sep=args.sep)
+    for column in args.column:
+        output = '{}.{}.pdf'.format(args.prefix,column)
+        pairplot(data,column,args.title,output)
+
 def cdf_pipeline(args):
     '''
 

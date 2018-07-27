@@ -33,6 +33,20 @@ def density(data, column, title='density', out='density.pdf'):
     fig.savefig(out)
 
 
+def pairplot(data,type_column,title='pairplot',out='pairplot.pdf'):
+    '''
+
+    :param data:
+    :param type_column:
+    :param title:
+    :param outdir:
+    :return:
+    '''
+    ax = sns.pairplot(data,hue=type_column)
+    ax.set_title(title)
+    fig = ax.get_figure()
+    fig.savefig(out)
+
 def cdf(data, type_column, value_column, title='CDF', out='cdf.pdf'):
     '''
 

@@ -47,6 +47,11 @@ def read_gz(file, header, sep='\t'):
             # line = str(f.readline(), encoding='utf8')
             line = f.readline()
     pd_data = pd.DataFrame(data, columns=columns)
+    for column in columns:
+        try:
+            pd_data[column] = pd_data[column].astype(float)
+        except Exception as e:
+            print(e.args)
     return pd_data
 
 

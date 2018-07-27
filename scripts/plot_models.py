@@ -12,7 +12,7 @@ import argparse
 import matplotlib
 matplotlib.use('Agg')
 sys.path.append(os.path.abspath(os.path.dirname(os.path.dirname(__file__))))
-from plotlib.pipeline import density_pipeline,cdf_pipeline
+from plotlib.pipeline import density_pipeline,cdf_pipeline,pairplot_pipeline
 
 def main():
     parser = argparse.ArgumentParser(description='Some plots for some different Format file')
@@ -49,6 +49,21 @@ def main():
     cdf_parser.add_argument('--header', dest='header', action='store_true',
                                 help='是否包含头，默认不包含，如果包含则column需要为列名')
     cdf_parser.set_defaults(func=cdf_pipeline)
+
+    pairplot_parser = parser_sub.add_parser('pairplot', help='不同类别数据比较图')
+    pairplot_parser.add_argument('--data', dest='data', required=True, action='store',
+                            help='data, .csv .txt .gz,<required>')
+    pairplot_parser.add_argument('--column', dest='column', required=True, action='store',
+                            help='hue column name or col number,<required>')
+    pairplot_parser.add_argument('--sep', dest='sep', default='\t', action='store',
+                            help='sep ,defalut "tab"')
+    pairplot_parser.add_argument('--title', dest='title', default='pairpolt', action='store',
+                            help='title ,defalut "pairplot"')
+    pairplot_parser.add_argument('--prefix', dest='prefix', required=True, action='store',
+                            help='output prefix,<required>')
+    pairplot_parser.add_argument('--header', dest='header', action='store_true',
+                            help='是否包含头，默认不包含，如果包含则column需要为列名')
+    pairplot_parser.set_defaults(func=pairplot_pipeline)
 
     # bam_template_gc_parser = parser_sub.add_parser('Bam_GC', help='统计DNA模版GC含量')
     # '''align,fasta,outdir,sample_n=10000'''
