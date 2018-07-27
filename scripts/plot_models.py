@@ -53,7 +53,7 @@ def main():
     pairplot_parser = parser_sub.add_parser('pairplot', help='不同类别数据比较图')
     pairplot_parser.add_argument('--data', dest='data', required=True, action='store',
                             help='data, .csv .txt .gz,<required>')
-    pairplot_parser.add_argument('--column', dest='column', required=True, action='store',
+    pairplot_parser.add_argument('--column', dest='column', required=True, action='store',nargs='+',
                             help='hue column name or col number,<required>')
     pairplot_parser.add_argument('--sep', dest='sep', default='\t', action='store',
                             help='sep ,defalut "tab"')
