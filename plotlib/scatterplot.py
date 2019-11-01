@@ -39,7 +39,7 @@ def scatter2d(df, x, y, title=None, x_label=None, y_label=None, hue=None, style=
         'alpha': alpha,
         'legend': legend
     }
-    print(df.columns)
+
 
     setdict = {
         'xlabel': x,
