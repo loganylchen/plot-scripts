@@ -10,60 +10,97 @@ from __future__ import absolute_import, unicode_literals
 import os, sys
 import argparse
 import matplotlib
+
 matplotlib.use('Agg')
 sys.path.append(os.path.abspath(os.path.dirname(os.path.dirname(__file__))))
-from plotlib.pipeline import density_pipeline,cdf_pipeline,pairplot_pipeline
+from plotlib.pipeline import density_pipeline, cdf_pipeline, pairplot_pipeline, scatter_pipeline
+
 
 def main():
     parser = argparse.ArgumentParser(description='Some plots for some different Format file')
     parser_sub = parser.add_subparsers(dest='subparser_name', help='Sub-commands (use with -h for more info)')
 
-    density_parser = parser_sub.add_parser('density', help='画一列数据的density')
-    density_parser.add_argument('--data', dest='data', required=True, action='store',
-                                       help='data, .csv .txt .gz,<required>')
-    density_parser.add_argument('--column', dest='column', required=True,  action='store',
-                                       help='column name wants to plot or col number,<required>')
-    density_parser.add_argument('--sep', dest='sep', default= '\t',action='store',
-                                       help='sep ,defalut "tab"')
-    density_parser.add_argument('--title', dest='title', default='density', action='store',
-                               help='title ,defalut "density"')
-    density_parser.add_argument('--output', dest='output', required=True, action='store',
-                                       help='the suffix is .png or .pdf,<required>')
-    density_parser.add_argument('--header', dest='header',  action='store_true',
-                                help='是否包含头，默认不包含，如果包含则column需要为列名')
+    density_parser = parser_sub.add_parser('density', help='plot one column data density')
+    density_parser.add_argument('--data', required=True, action='store',
+                                help='data, .csv .txt .gz,<required>')
+    density_parser.add_argument('--column', required=True, action='store',
+                                help='column name wants to plot or col number')
+    density_parser.add_argument('--sep', default='\t', action='store',
+                                help='sep ,defalut "tab"')
+    density_parser.add_argument('--title', default='density', action='store',
+                                help='title ,defalut "density"')
+    density_parser.add_argument('--output', required=True, action='store',
+                                help='the suffix is .png or .pdf,<required>')
+    density_parser.add_argument('--header', action='store_true',
+                                help='with header? if it is "yes",the column need to be column name')
     density_parser.set_defaults(func=density_pipeline)
 
-    cdf_parser = parser_sub.add_parser('cdf', help='画一列数据的cdf')
-    cdf_parser.add_argument('--data', dest='data', required=True, action='store',
-                                help='data, .csv .txt .gz,<required>')
-    cdf_parser.add_argument('--type-column', dest='type_column', required=False, action='store',
-                                help='type column name or col number',default='')
-    cdf_parser.add_argument('--value-column', dest='value_column', required=True, action='store',
+    cdf_parser = parser_sub.add_parser('cdf', help='plot one column data cdf')
+    cdf_parser.add_argument('--data', required=True, action='store',
+                            help='data, .csv .txt .gz,<required>')
+    cdf_parser.add_argument('--type-column', required=False, action='store',
+                            help='type column name or col number', default='')
+    cdf_parser.add_argument('--value-column', required=True, action='store',
                             help='value column name or col number,<required>')
-    cdf_parser.add_argument('--sep', dest='sep', default='\t', action='store',
-                                help='sep ,defalut "tab"')
-    cdf_parser.add_argument('--title', dest='title', default='cdf', action='store',
-                                help='title ,defalut "cdf"')
-    cdf_parser.add_argument('--output', dest='output', required=True, action='store',
-                                help='the suffix is .png or .pdf,<required>')
-    cdf_parser.add_argument('--header', dest='header', action='store_true',
-                                help='是否包含头，默认不包含，如果包含则column需要为列名')
+    cdf_parser.add_argument('--sep', default='\t', action='store',
+                            help='sep ,defalut "tab"')
+    cdf_parser.add_argument('--title', default='cdf', action='store',
+                            help='title ,defalut "cdf"')
+    cdf_parser.add_argument('--output', required=True, action='store',
+                            help='the suffix is .png or .pdf,<required>')
+    cdf_parser.add_argument('--header', action='store_true',
+                            help='with header? if it is "yes",the column need to be column name')
     cdf_parser.set_defaults(func=cdf_pipeline)
 
-    pairplot_parser = parser_sub.add_parser('pairplot', help='不同类别数据比较图')
-    pairplot_parser.add_argument('--data', dest='data', required=True, action='store',
-                            help='data, .csv .txt .gz,<required>')
-    pairplot_parser.add_argument('--column', dest='column', required=True, action='store',nargs='+',
-                            help='hue column name or col number,<required>')
-    pairplot_parser.add_argument('--sep', dest='sep', default='\t', action='store',
-                            help='sep ,defalut "tab"')
-    pairplot_parser.add_argument('--title', dest='title', default='pairpolt', action='store',
-                            help='title ,defalut "pairplot"')
-    pairplot_parser.add_argument('--prefix', dest='prefix', required=True, action='store',
-                            help='output prefix,<required>')
-    pairplot_parser.add_argument('--header', dest='header', action='store_true',
-                            help='是否包含头，默认不包含，如果包含则column需要为列名')
+    pairplot_parser = parser_sub.add_parser('pairplot', help='compare pairplot')
+    pairplot_parser.add_argument('--data', required=True, action='store',
+                                 help='data, .csv .txt .gz,<required>')
+    pairplot_parser.add_argument('--column', required=True, action='store', nargs='+',
+                                 help='hue column name or col number,<required>')
+    pairplot_parser.add_argument('--sep', default='\t', action='store',
+                                 help='sep ,defalut "tab"')
+    pairplot_parser.add_argument('--title', default='pairpolt', action='store',
+                                 help='title ,defalut "pairplot"')
+    pairplot_parser.add_argument('--prefix', required=True, action='store',
+                                 help='output prefix,<required>')
+    pairplot_parser.add_argument('--header', action='store_true',
+                                 help='with header? if it is "yes",the column need to be column name')
     pairplot_parser.set_defaults(func=pairplot_pipeline)
+
+    scatter_parser = parser_sub.add_parser('scatter', help='scatter plot')
+    scatter_parser.add_argument('--data', required=True, action='store',
+                                help='data, .csv .txt .gz')
+    scatter_parser.add_argument('--x', required=True, action='store',
+                                help='column name wants to plot')
+    scatter_parser.add_argument('--y', required=True, action='store',
+                                help='column name wants to plot')
+    scatter_parser.add_argument('--sep', default='\t', action='store',
+                                help='sep ,defalut "tab"')
+    scatter_parser.add_argument('--title', default='Scatter', action='store',
+                                help='title ,defalut "Scatter"')
+    scatter_parser.add_argument('--x-label', default=None,
+                                help='x label to show in figure, default is --x name')
+    scatter_parser.add_argument('--y-label', default=None,
+                                help='y label to show in figure, default is --y name')
+    scatter_parser.add_argument('--hue', default=None,
+                                help='HUE classification label in the data, which distinguish '
+                                     'scatters in different colors')
+    scatter_parser.add_argument('--style', default=None,
+                                help='STYLE classification label in the data, which distinguish '
+                                     'scatters in different shapes')
+    scatter_parser.add_argument('--legend', choices=['full', 'brief'], default='full',
+                                help='legend type, full for full name, brief for number')
+    scatter_parser.add_argument('--alpha', default=0.3, type=float,
+                                help='scatter points alpha')
+    scatter_parser.add_argument('--width', default=25, type=int,
+                                help='figure width')
+    scatter_parser.add_argument('--height', default=25, type=int,
+                                help='figure height')
+    scatter_parser.add_argument('--output', required=True, action='store',
+                                help='the suffix is .png or .pdf,<required>')
+    scatter_parser.add_argument('--header', action='store_true',
+                                help='with header? if it is "yes",the column need to be column name')
+    scatter_parser.set_defaults(func=scatter_pipeline)
 
     # bam_template_gc_parser = parser_sub.add_parser('Bam_GC', help='统计DNA模版GC含量')
     # '''align,fasta,outdir,sample_n=10000'''
